@@ -14,8 +14,35 @@ const api_key = "def37825";
 let films = [
   {
     id: "0",
-    movie: "Guardians of the Galaxy Vol. 2"
+    movie: "Guardians of the Galaxy Vol. 2",
+    yearOfRelease: "2017",
+    duration: "136", // en minutes,
+    actors: ["Chris Pratt", "Zoe Saldana"],
+    poster: "https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg", // lien vers une image d'affiche,
+    boxOffice: "0", // en USD$,
+    rottenTomatoesScore: "85%"
   },
+  {
+    id: "1",
+    movie: "La grande vadrouille",
+    yearOfRelease: "1966",
+    duration: "132", // en minutes,
+    actors: ["Bourvil", "Louis de Funès"],
+    poster: "https://m.media-amazon.com/images/M/MV5BM2M5YTZkNzYtYzM3ZS00YmQzLTg3NWEtOGZhYzFhNjA2NWEyL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UY1200_CR139,0,630,1200_AL_.jpg", // lien vers une image d'affiche,
+    boxOffice: "0", // en USD$,
+    rottenTomatoesScore: "90%"
+  },
+  {
+    id: "2",
+    movie: "La 7ème compagnie au clair de lune",
+    yearOfRelease: "1977",
+    duration: "75", // en minutes,
+    actors: ["Jean Lefebvre", "Pierre Mondy"],
+    poster: "https://m.media-amazon.com/images/M/MV5BYTY0MTFlMDYtMTgzZS00YjMwLWFjZGUtODIwOGEwOWE4NTU0XkEyXkFqcGdeQXVyMTY5MDE5NA@@._V1_FMjpg_UX1000_.jpg", // lien vers une image d'affiche,
+    boxOffice: "0", // en USD$,
+    rottenTomatoesScore: "75%"
+  },
+
 ];
 
 /* GET films listing. */
@@ -54,7 +81,13 @@ router.put('/:title', (req, res) => {
     // Insert it in array (normaly with connect the data with the database)
     films.push({
       id: id,
-      movie: response.Title
+      movie: response.Title,
+      yearOfRelease : data.Year,
+      duration : data.Runtime,
+      actors : [data.Actors],
+      poster : data.Poster,
+      boxOffice : data.BoxOffice,
+      rottenTomatoesScore: data.Ratings[1].Value
     });
 
   }).catch(error => {
@@ -97,6 +130,12 @@ router.post('/:id', (req, res) => {
   axios.get('${api_url}?apikey=${api_key}&t={film}').then((response) => {
 
     filmToUpdate.Title = film;
+    filmToUpdate.yearOfRelease = data.Year;
+    filmToUpdate.duration= data.Runtime;
+    filmToUpdate.actors = [data.Actors];
+    filmToUpdate.poster = data.Poster;
+    filmToUpdate.boxOffice = data.BoxOffice;
+    filmToUpdate.rottenTomatoesScore= data.Ratings[1].Value
 
   }).catch(error => {
           console.log(error);
